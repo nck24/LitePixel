@@ -1,0 +1,11 @@
+#Ignore the .vscode folder
+/.vscode
+
+#Ignore the bin folder
+/bin
+
+#Ignore the obj folder
+/obj
+
+#Ignore the LitePixel.csproj
+LitePixel.csproj
