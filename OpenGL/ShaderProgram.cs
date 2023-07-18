@@ -35,7 +35,6 @@ namespace LitePixel.OpenGL
             GL.DetachShader(this.handle, fragHandle);
             GL.DeleteShader(vertHandle);
             GL.DeleteShader(fragHandle);
-
         }
 
         void CheckCompileError(ErrorCode er, string name){
