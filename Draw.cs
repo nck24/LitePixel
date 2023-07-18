@@ -24,11 +24,13 @@ namespace LitePixel
                 })
                 {
             this.CenterWindow();
+
             SetUp();
         }
 
         void SetUp(){
             ShaderProgram sp = new ShaderProgram(@"Shaders\VertexShader.glsl", @"Shaders\FragmentShader.glsl");
+            sp.Use();
         }
     }
 }

@@ -42,5 +42,9 @@ namespace LitePixel.OpenGL
                 throw new Exception($"{name} did not compile");
             }
         }
+
+        public void Use(){
+            GL.UseProgram(this.handle);
+        }
     }
 }
