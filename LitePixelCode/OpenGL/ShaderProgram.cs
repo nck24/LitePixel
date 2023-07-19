@@ -8,20 +8,22 @@ namespace LitePixel.OpenGL
         public readonly int handle;
 
         public ShaderProgram(string vert, string frag){
-
+            string err;
             // set up the vertex shader
             string vertCode = File.ReadAllText(vert);
             int vertHandle = GL.CreateShader(ShaderType.VertexShader);
             GL.ShaderSource(vertHandle, vertCode);
             GL.CompileShader(vertHandle);
-            CheckCompileError(GL.GetError(), "Vertex Shader");
+            GL.GetShaderInfoLog(vertHandle, out err);
+            CheckCompileError(err, "Vertex shader");
 
             // set up the fragment shader
             string fragCode = File.ReadAllText(frag);
             int fragHandle = GL.CreateShader(ShaderType.FragmentShader);
             GL.ShaderSource(fragHandle, fragCode);
             GL.CompileShader(fragHandle);
-            CheckCompileError(GL.GetError(), "Fragment Shader");
+            GL.GetShaderInfoLog(vertHandle, out err);
+            CheckCompileError(err, "Fragment Shader");
             
 
             this.handle = GL.CreateProgram();
@@ -37,9 +39,9 @@ namespace LitePixel.OpenGL
             GL.DeleteShader(fragHandle);
         }
 
-        void CheckCompileError(ErrorCode er, string name){
-            if (er != ErrorCode.NoError){
-                throw new Exception($"{name} did not compile");
+        void CheckCompileError(string error, string name){
+            if (error != String.Empty){
+                throw new Exception($"{name} did not compile : {error}");
             }
         }
 
