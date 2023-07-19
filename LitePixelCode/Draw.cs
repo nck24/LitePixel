@@ -1,4 +1,4 @@
-using System;
+using LitePixel.OpenGL;
 using OpenTK.Graphics.OpenGL4;
 using OpenTK.Mathematics;
 using OpenTK.Windowing.Common;
@@ -24,11 +24,13 @@ namespace LitePixel
                 })
                 {
             this.CenterWindow();
+
             SetUp();
         }
 
         void SetUp(){
-
+            ShaderProgram sp = new ShaderProgram(@"Shaders\VertexShader.glsl", @"Shaders\FragmentShader.glsl");
+            sp.Use();
         }
     }
 }
