@@ -12,7 +12,7 @@ namespace LitePixel
         int vao;
         int vbo;
 
-        public Window(int width = 1280, int height = 720, string title = "Maze Generator")
+        public Window(int width = 1280, int height = 720, string title = "")
             : base(new GameWindowSettings(){
                 UpdateFrequency = 60,
             },
@@ -44,19 +44,24 @@ namespace LitePixel
             this.sp = new ShaderProgram(@"C:\Users\Niko\Documents\Projects\VS Code\C# not personal\LitePixel\Shaders\VertexShader.glsl", 
                 @"C:\Users\Niko\Documents\Projects\VS Code\C# not personal\LitePixel\Shaders\FragmentShader.glsl");
 
-            GL.ClearColor(Color4.Aquamarine);
+            GL.ClearColor(Color4.Black);
 
             vbo = GL.GenBuffer();
             GL.BindBuffer(BufferTarget.ArrayBuffer, vbo);
             GL.BufferData(BufferTarget.ArrayBuffer, vertices.Length * sizeof(float), vertices, BufferUsageHint.StaticDraw);
 
+            // VBO buffer = new VBO(3, 6);
+
             vao = GL.GenVertexArray();
             GL.BindVertexArray(vao);
+            // buffer.BindBuffer();
             GL.VertexAttribPointer(0, 2, VertexAttribPointerType.Float, false, 6 * sizeof(float), 0);
             GL.VertexAttribPointer(1, 4, VertexAttribPointerType.Float, false, 6 * sizeof(float), 2 * sizeof(float));
 
             GL.EnableVertexAttribArray(0);
             GL.EnableVertexAttribArray(1);
+
+            // buffer.UnbindBuffer();
 
             GL.BindBuffer(BufferTarget.ArrayBuffer, 0);
 
@@ -81,3 +86,4 @@ namespace LitePixel
         }
     }
 }
+

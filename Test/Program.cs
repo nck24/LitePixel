@@ -9,7 +9,9 @@ namespace Test
         {
             Console.WriteLine("Hello World!");
 
-            Window w = new Window();
+            using (Window w = new Window()){
+                Console.ReadLine();
+            }
 
             Console.ReadLine();
         }
