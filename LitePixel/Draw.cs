@@ -9,8 +9,12 @@ namespace LitePixel
     public class Window : GameWindow
     {
         ShaderProgram sp = default!;
-        int vao;
-        int vbo;
+        VAO vao;
+        VBO vbo;
+
+        public string vertCode = default!;
+        public string frtagCode = default!;
+        
 
         public Window(int width = 1280, int height = 720, string title = "")
             : base(new GameWindowSettings(){
@@ -32,43 +36,41 @@ namespace LitePixel
             SetUp();
         }
 
-        private readonly float[] vertices =
+        private readonly float[] vertices1 =
         {
             // x     y     R      G     B     A
             -0.5f, -0.5f, 1.0f,  0.0f, 0.0f, 1.0f, // Bottom-left vertex
              0.5f, -0.5f, 0.0f,  1.0f, 0.0f, 1.0f,// Bottom-right vertex
              0.0f,  0.5f, 0.0f,  0.0f, 1.0f, 1.0f,// Top vertex
         };
+        
+        private readonly float[] vertices2 =
+        {
+            // x     y     R      G     B     A
+            -1.0f,  1.0f, 1.0f, 1.0f, 1.0f, 1.0f, // Bottom-left vertex
+            -0.25f, 0.0f, 1.0f, 1.0f, 1.0f, 1.0f,// Bottom-right vertex
+            -0.1f, -0.5f, 1.0f, 1.0f, 1.0f, 1.0f,// Top vertex
+        };
 
         void SetUp(){
-            this.sp = new ShaderProgram(@"C:\Users\Niko\Documents\Projects\VS Code\C# not personal\LitePixel\Shaders\VertexShader.glsl", 
-                @"C:\Users\Niko\Documents\Projects\VS Code\C# not personal\LitePixel\Shaders\FragmentShader.glsl");
+            this.vertCode = File.ReadAllText(@"C:\Users\Niko\Documents\Projects\VS Code\C# not personal\LitePixel\Shaders\VertexShader.glsl");
+            this.frtagCode = File.ReadAllText(@"C:\Users\Niko\Documents\Projects\VS Code\C# not personal\LitePixel\Shaders\FragmentShader.glsl");
+
+            this.sp = new ShaderProgram(vertCode, frtagCode);
 
             GL.ClearColor(Color4.Black);
 
-            vbo = GL.GenBuffer();
-            GL.BindBuffer(BufferTarget.ArrayBuffer, vbo);
-            GL.BufferData(BufferTarget.ArrayBuffer, vertices.Length * sizeof(float), vertices, BufferUsageHint.StaticDraw);
+            this.vbo = new VBO(3, VertexPositionColor.vertInfo);
+            this.vbo.SetData(vertices1, 3);
 
-            // VBO buffer = new VBO(3, 6);
-
-            vao = GL.GenVertexArray();
-            GL.BindVertexArray(vao);
-            // buffer.BindBuffer();
-            GL.VertexAttribPointer(0, 2, VertexAttribPointerType.Float, false, 6 * sizeof(float), 0);
-            GL.VertexAttribPointer(1, 4, VertexAttribPointerType.Float, false, 6 * sizeof(float), 2 * sizeof(float));
-
-            GL.EnableVertexAttribArray(0);
-            GL.EnableVertexAttribArray(1);
-
-            // buffer.UnbindBuffer();
+            this.vao = new VAO(this.vbo);
 
             GL.BindBuffer(BufferTarget.ArrayBuffer, 0);
 
             GL.Clear(ClearBufferMask.ColorBufferBit);
             
             this.sp.Use();
-            GL.BindVertexArray(vao);
+            this.vao.BindVAO();
             GL.DrawArrays(PrimitiveType.Triangles, 0, 3);
             this.SwapBuffers();
         }
@@ -76,13 +78,17 @@ namespace LitePixel
         protected override void OnRenderFrame(FrameEventArgs args)
         {
             base.OnRenderFrame(args);
+        }
 
-            GL.Clear(ClearBufferMask.ColorBufferBit);
+        public void DrawAnotherTriangle(){
+            this.SwapBuffers();
 
-            sp.Use();
-            GL.BindVertexArray(vao);
+            this.vbo.SetData(vertices2, 3);
+
+            this.sp.Use();
+            this.vao.BindVAO();
             GL.DrawArrays(PrimitiveType.Triangles, 0, 3);
-            SwapBuffers();
+            this.SwapBuffers();
         }
     }
 }

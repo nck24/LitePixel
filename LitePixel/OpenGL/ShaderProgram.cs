@@ -10,7 +10,7 @@ namespace LitePixel.OpenGL
         public ShaderProgram(string vert, string frag){
             string err;
             // set up the vertex shader
-            string vertCode = File.ReadAllText(vert);
+            string vertCode = vert;
             int vertHandle = GL.CreateShader(ShaderType.VertexShader);
             GL.ShaderSource(vertHandle, vertCode);
             GL.CompileShader(vertHandle);
@@ -18,7 +18,7 @@ namespace LitePixel.OpenGL
             CheckCompileError(err, "Vertex shader");
 
             // set up the fragment shader
-            string fragCode = File.ReadAllText(frag);
+            string fragCode = frag;
             int fragHandle = GL.CreateShader(ShaderType.FragmentShader);
             GL.ShaderSource(fragHandle, fragCode);
             GL.CompileShader(fragHandle);

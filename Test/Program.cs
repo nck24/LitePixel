@@ -11,6 +11,8 @@ namespace Test
 
             using (Window w = new Window()){
                 Console.ReadLine();
+                w.DrawAnotherTriangle();
+                Console.ReadLine();
             }
 
             Console.ReadLine();

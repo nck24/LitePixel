@@ -19,10 +19,12 @@ namespace LitePixel.OpenGL
 
     public struct VertexInfo
     {
+        public readonly Type type;
         public readonly int sizeInBytes;
         public readonly VertexAttribute[] atribs;
 
-        public VertexInfo(params VertexAttribute[] atribs){
+        public VertexInfo(Type type, params VertexAttribute[] atribs){
+            this.type = type;
             this.sizeInBytes = 0;
             this.atribs = atribs;
 
@@ -37,7 +39,8 @@ namespace LitePixel.OpenGL
         public readonly Vector2 Position;
         public readonly Vector4 Color;
         
-        public static readonly VertexInfo vertInfo = new VertexInfo(
+        
+        public static readonly VertexInfo vertInfo = new VertexInfo(typeof(VertexPositionColor),
             new VertexAttribute("Position", 0, 2, 0),
             new VertexAttribute("Color", 1, 4, 2 * sizeof(float)));
 
