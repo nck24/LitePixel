@@ -7,6 +7,11 @@ namespace LitePixel.OpenGL
     {
         public readonly int handle;
 
+        /// <summary>
+        /// Creates the shader program
+        /// </summary>
+        /// <param name="vert">The code of the vertex shader</param>
+        /// <param name="frag">The code of the fragment shader</param>
         public ShaderProgram(string vert, string frag){
             string err;
             // set up the vertex shader
@@ -45,6 +50,9 @@ namespace LitePixel.OpenGL
             }
         }
 
+        /// <summary>
+        /// Use this shader program
+        /// </summary>
         public void Use(){
             GL.UseProgram(this.handle);
         }

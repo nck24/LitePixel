@@ -26,10 +26,16 @@ namespace LitePixel.OpenGL
 
         }
 
+        /// <summary>
+        /// Binds this VAO
+        /// </summary>
         public void BindVAO(){
             GL.BindVertexArray(this.handle);
         }
-
+        
+        /// <summary>
+        /// Unbinds this VAO
+        /// </summary>
         public void UnbindVAO(){
             GL.BindVertexArray(0);
         }

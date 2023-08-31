@@ -28,16 +28,28 @@ namespace LitePixel.OpenGL
             this.UnbindBuffer();
         }
 
+        /// <summary>
+        /// Puts the data in the buffer
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="data">new data</param>
+        /// <param name="count">the amount of new vertecies</param>
         public void SetData<T>(T[] data, int count) where T : struct{
             this.BindBuffer();
             GL.BufferSubData(BufferTarget.ArrayBuffer, IntPtr.Zero, count * this.VertBitSize, data);
             this.UnbindBuffer();
         }
 
+        /// <summary>
+        /// Binds the buffer
+        /// </summary>
         public void BindBuffer(){
             GL.BindBuffer(BufferTarget.ArrayBuffer, this.handle);
         }
 
+        /// <summary>
+        /// Unbinds the buffer
+        /// </summary>
         public void UnbindBuffer(){
             GL.BindBuffer(BufferTarget.ArrayBuffer, 0);
         }
